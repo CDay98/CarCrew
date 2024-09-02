@@ -1,3 +1,5 @@
+import CheckoutButton from '@/components/shared/CheckoutButton';
+import Collection from '@/components/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
@@ -46,6 +48,9 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
                 </p>
                 </div>
             </div>
+
+            <CheckoutButton event={event} />
+
             <div className="flex flex-col gap-5">
                 <div className="flex items-start sm:items-center gap-2 md:gap-3">
                     <Image src="/assets/icons/calendar.svg" alt="calendar" width={32} height={32} />
@@ -79,7 +84,16 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
         {/* EVENTS with the same category */}
         <section className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-        <h2 className="h2-bold">Related Events</h2>
+            <h2 className="h2-bold">Related Events</h2>
+            <Collection 
+            data={relatedEvents?.data}
+            emptyTitle="No Events Found"
+            emptyStateSubtext="Come back later"
+            collectionType="All_Events"
+            limit={6}
+            page={1}
+            totalPages={2}
+            />
         </section>
     </>
   )
