@@ -1,4 +1,4 @@
-import * as z from "zod"
+import * as z from "zod";
 
 export const eventFormSchema = z.object({
   title: z.string().min(3, 'Title must be at least 3 characters'),
@@ -11,4 +11,7 @@ export const eventFormSchema = z.object({
   price: z.string(),
   isFree: z.boolean(),
   url: z.string().url()
-})
+}).refine((data) => data.startDateTime <= data.endDateTime, {
+  message: "Start date cannot be after end date",
+  path: ["endDateTime"], // The path where the error message will appear
+});
